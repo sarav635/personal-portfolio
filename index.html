@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SARAVANAN S - Personal Portfolio</title>
+<style>
+  /* Reset and base styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f2027;
+    background: linear-gradient(135deg, #203a43, #2c5364);
+    color: #f0f0f0;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a {
+    color: #e1e1e1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #ff6f61;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Header / Hero Section */
+  header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated shining effect for the name */
+  .name {
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff6f61, #f7d794, #ff6f61);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shine 3s linear infinite;
+    margin-bottom: 15px;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #bbb;
+    margin-bottom: 40px;
+    max-width: 80%;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFadeIn 1.2s forwards 0.5s;
+  }
+
+  /* Button */
+  .btn {
+    display: inline-block;
+    background: #ff6f61;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(255,111,97,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFadeIn 1.2s forwards 0.8s;
+  }
+  .btn:hover {
+    background: #f74e3e;
+    box-shadow: 0 8px 20px rgba(247,78,62,0.7);
+    transform: translateY(-3px);
+  }
+
+  /* Navigation (sticky top) */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 32, 39, 0.9);
+    padding: 10px 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+  nav .container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+  }
+  nav a {
+    font-weight: 600;
+    font-size: 1rem;
+    position: relative;
+    padding: 5px;
+  }
+  nav a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background: #ff6f61;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+  nav a:hover::after, nav a.active::after {
+    width: 100%;
+  }
+  nav a:hover, nav a.active {
+    color: #ff6f61;
+  }
+
+  /* Sections */
+  section {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  h2.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #ff6f61;
+    position: relative;
+  }
+  h2.section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ff6f61;
+    margin: 12px auto 0;
+    border-radius: 2px;
+  }
+
+  /* About */
+  #about p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    color: #ddd;
+  }
+
+  /* Skills */
+  #skills .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .skill-item {
+    background: #203a43;
+    padding: 15px 25px;
+    border-radius: 35px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ff6f61;
+    box-shadow: 0 4px 6px rgba(255, 111, 97, 0.3);
+    cursor: default;
+    transform: translateY(20px);
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+  .skill-item:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 15px rgba(255, 111, 97, 0.7);
+  }
+
+  /* Projects */
+  #projects .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .project-card {
+    background: #203a43;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+  }
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(255, 111, 97, 0.7);
+  }
+  .project-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 3px solid #ff6f61;
+  }
+  .project-content {
+    padding: 15px 20px;
+    flex-grow: 1;
+  }
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ff6f61;
+  }
+  .project-description {
+    font-size: 0.95rem;
+    color: #ddd;
+    flex-grow: 1;
+  }
+  .project-links {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+  }
+  .project-links a {
+    background: #ff6f61;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+    color: white;
+    display: inline-block;
+    text-align: center;
+  }
+  .project-links a:hover {
+    background: #f74e3e;
+  }
+
+  /* Contact */
+  #contact {
+    text-align: center;
+  }
+  #contact p {
+    margin-bottom: 15px;
+    font-size: 1.125rem;
+    color: #ddd;
+  }
+  #contact a {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #777;
+    font-size: 0.9rem;
+  }
+
+  /* Fade and slide up animation for header elements */
+  @keyframes slideUpFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .name {
+      font-size: 2.5rem;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      max-width: 90%;
+    }
+    nav .container {
+      justify-content: center;
+      gap: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container" id="nav-container">
+    <a href="#about" class="nav-link active">About</a>
+    <a href="#skills" class="nav-link">Skills</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+</nav>
+
+<header>
+  <div class="container">
+    <h1 class="name" aria-label="SARAVANAN S">SARAVANAN S</h1>
+    <p class="subtitle">Student |   Aspiring Data scientist & Web Developer</p>
+    <a href="#projects" class="btn" aria-label="See My Projects">See My Projects</a>
+  </div>
+</header>
+
+<section id="about" aria-label="About SARAVANAN S" class="section">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <p>
+      Hello! I am a student passionate about programming, data science, and web development. I am eager to learn and grow in the fields of machine learning, big data analysis, and neural networks. My journey focuses on mastering programming languages and concepts as well as building real-world projects.
+    </p>
+  </div>
+</section>
+
+<section id="skills" aria-label="Skills of SARAVANAN S" class="section">
+  <div class="container">
+    <h2 class="section-title">My Skills</h2>
+    <div class="skills-list" aria-live="polite">
+      <div class="skill-item">C</div>
+      <div class="skill-item">C++</div>
+      <div class="skill-item">Python</div>
+      <div class="skill-item">JavaScript</div>
+      <div class="skill-item">HTML</div>
+      <div class="skill-item">DSA (C Language)</div>
+      <div class="skill-item">Data Science</div>
+      <div class="skill-item">EDA (Exploratory Data Analysis)</div>
+      <div class="skill-item">Big Data & Analysis</div>
+      <div class="skill-item">Neural Networks & Deep Learning</div>
+      <div class="skill-item">Basic Machine Learning Concepts</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" aria-label="Projects of SARAVANAN S" class="section">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=80" alt="Responsive Portfolio Website" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Responsive Portfolio Website</h3>
+          <p class="project-description">
+            A modern and responsive personal portfolio website showcasing my skills and projects.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Responsive Portfolio code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Responsive Portfolio Website">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=400&q=80" alt="Shopping Website" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Responsive Shopping Website</h3>
+          <p class="project-description">
+            A fully responsive e-commerce website with smooth navigation and user-friendly interface.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Shopping Website code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Shopping Website">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Weather Prediction Landing Page" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Weather Prediction Responsive Landing Page</h3>
+          <p class="project-description">
+            A landing page that shows weather prediction info using responsive design techniques.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Weather Prediction Landing Page code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Weather Prediction Landing Page">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Titanic Data Science Project" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Titanic Survival Analysis</h3>
+          <p class="project-description">
+            A data science project analyzing Titanic passenger data to predict survival rates using Python.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Titanic Data Science project code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Titanic Data Science project">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" alt="Big Data Analysis Project" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Big Data Analysis</h3>
+          <p class="project-description">
+            Project demonstrating big data processing and visualization techniques using Hadoop and Spark.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Big Data Analysis project code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Big Data Analysis project">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=400&q=80" alt="Neural Network Project" class="project-image" />
+        <div class="project-content">
+          <h3 class="project-title">Neural Networks & Deep Learning</h3>
+          <p class="project-description">
+            Study and implementation of neural networks for deep learning tasks using TensorFlow and Keras.
+          </p>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener" aria-label="View Neural Networks Deep Learning project code on GitHub">GitHub</a>
+            <a href="#" target="_blank" rel="noopener" aria-label="Live demo of Neural Networks Deep Learning project">Live Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-label="Contact SARAVANAN S" class="section">
+  <div class="container">
+    <h2 class="section-title">Get In Touch</h2>
+    <p>Feel free to reach out if you'd like to collaborate or chat!</p>
+    <p>Email: <a href="mailto:saravananselvam060305@gmail.com" aria-label="Send email to Saravanan">saravananselvam060305@example.com</a></p>
+    <p>Phone: <a href="tel:+918248332991" aria-label="Call Saravanan">+91 82483 32991</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/saravanan-selvam-b783b9251" target="_blank" rel="noopener" aria-label="Visit Saravanan's LinkedIn Profile">linkedin.com/in/saravanan-selvam-b783b9251</a></p>
+    <p>GitHub: <a href="https://github.com/saravanan" target="_blank" rel="noopener" aria-label="Visit Saravanan's GitHub Profile">github.com/saravanan</a></p>
+  </div>
+</section>
+
+<footer>
+  &copy; 2024 SARAVANAN S. All rights reserved.
+</footer>
+
+<script>
+  // Scroll Fade-in Animation for sections
+  function revealOnScroll() {
+    const sections = document.querySelectorAll('.section');
+    let scrollY = window.pageYOffset;
+    let innerHeight = window.innerHeight;
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if(rect.top < innerHeight - 100) {
+        section.classList.add('visible');
+      }
+    });
+
+    // Highlight nav links based on scroll position
+    const navLinks = document.querySelectorAll('nav a');
+    sections.forEach(section => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if(scrollY >= top - 80 && scrollY < top + height - 80) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if(link.getAttribute('href').substring(1) === section.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+
+    // Animate skill items and project cards separately for staggered effects
+    // Skills
+    const skillItems = document.querySelectorAll('.skill-item');
+    skillItems.forEach((item, index) => {
+      const itemTop = item.getBoundingClientRect().top;
+      if(itemTop < innerHeight - 50) {
+        item.style.animation = `slideUpFadeIn 0.5s forwards`;
+        item.style.animationDelay = `${index * 0.1}s`;
+      }
+    });
+
+    // Projects
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+      const cardTop = card.getBoundingClientRect().top;
+      if(cardTop < innerHeight - 50) {
+        card.style.animation = `slideUpFadeIn 0.6s forwards`;
+        card.style.animationDelay = `${index * 0.15}s`;
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', () => {
+    revealOnScroll();
+  });
+</script>
+
+</body>
+</html>
+
